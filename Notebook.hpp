@@ -13,7 +13,7 @@ namespace ariel{
         int lineSize = 100;
         vector<vector<char>> notebook;
     public:
-        void write(unsigned int page, unsigned int row, unsigned int col, Direction direction, string data);
+        void write(unsigned int page, unsigned int row, unsigned int col, Direction direction, const string & data);
         string read(unsigned int page, unsigned int row, unsigned int col, Direction direction, unsigned int readLength);
         void erase(unsigned int page, unsigned int row, unsigned int col, Direction direction, unsigned int eraselength);
         void show(unsigned int page);
