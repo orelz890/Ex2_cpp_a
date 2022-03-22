@@ -15,6 +15,7 @@ Notebook n;
 unsigned int page0 = 0;
 
 TEST_CASE("Good writing/reading/erasing"){
+
     n.write(page0,0,0,Direction::Horizontal,"Hey");
     CHECK (n.read(page0, 0, 0, Direction::Horizontal, 3) == "Hey");
     n.write(page0,14,0,Direction::Horizontal,"second test");
@@ -59,6 +60,7 @@ TEST_CASE("Good writing/reading/erasing"){
 Notebook n2;
 
 TEST_CASE("Bad input") {
+    
     n2.write(0,0,1,Direction::Vertical,"OrelZamler");
     n2.erase(0,0,5,Direction::Horizontal,6);
     for (size_t i = 0; i < 255; i++){
