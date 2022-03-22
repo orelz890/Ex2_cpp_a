@@ -48,6 +48,11 @@ TEST_CASE("Good writing/reading/erasing"){
     CHECK (n.read(0, 0, 0, Direction::Horizontal, 3) == "~~~");
     n.erase(0,0,10,Direction::Vertical, 13);
     CHECK (n.read(0,0,10,Direction::Vertical,13) == "~~~~~~~~~~~~~");
+
+    // Erasing not writing cel (just like writing ~)
+    n.erase(1,0,0,Direction::Horizontal,1);
+    CHECK (n.read(1,0,0,Direction::Horizontal,1) == "~");
+
 }
 
 
@@ -56,10 +61,17 @@ Notebook n2;
 TEST_CASE("Bad input") {
     n2.write(0,0,1,Direction::Vertical,"OrelZamler");
     n2.erase(0,0,5,Direction::Horizontal,6);
-    for (size_t i = 0; i < 255; i++){
+    for (size_t i = -50; i < 255; i++){
         char c = i;
         string s = "" + c;
 
+        // col do not exist:
+        if (i>100){
+            CHECK_THROWS(n2.write(0,0,i,Direction::Horizontal,s));
+            CHECK_THROWS(n2.read(0,0,i,Direction::Horizontal,1));
+            CHECK_THROWS(n2.erase(0,0,i,Direction::Horizontal,1));
+        }
+        
         // Char is printable. Check writing overiding:
         if (i >= 32 && i <= 126){
             string over_riding_one_char = s;
@@ -76,11 +88,29 @@ TEST_CASE("Bad input") {
             CHECK_THROWS(n2.write(0,0,5,Direction::Vertical,over_riding_erased_data_and_more));
             CHECK_THROWS(n2.write(0,0,0,Direction::Vertical,over_riding_erased_and_written_data));
         }
-        // Char is not printabe throw exception!
-        else{
+        // Char is not printabe!
+        else if(i>=0){
             CHECK_THROWS(n2.write(0, i%10, i%100, Direction::Horizontal, s));
             CHECK_THROWS(n2.write(0, i%10, i%100, Direction::Horizontal, "legal string" + s));
         }
-    } 
-    CHECK_THROWS ();
+        // Negetive input:
+        else{
+            CHECK_THROWS(n2.write(i,0,0,Direction::Horizontal,"not legal"));
+            CHECK_THROWS(n2.write(0,i,0,Direction::Horizontal,"not legal"));
+            CHECK_THROWS(n2.write(0,0,i,Direction::Horizontal,"not legal"));
+
+            CHECK_THROWS(n2.read(i,0,0,Direction::Horizontal,1));
+            CHECK_THROWS(n2.read(0,i,0,Direction::Horizontal,1));
+            CHECK_THROWS(n2.read(0,0,i,Direction::Horizontal,1));
+
+            CHECK_THROWS(n2.erase(i,0,0,Direction::Horizontal,1));
+            CHECK_THROWS(n2.erase(0,i,0,Direction::Horizontal,1));
+            CHECK_THROWS(n2.erase(0,0,i,Direction::Horizontal,1));
+        }
+
+    }
+
+    
+ 
+    // CHECK_THROWS ();
 }
