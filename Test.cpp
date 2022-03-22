@@ -50,3 +50,37 @@ TEST_CASE("Good writing/reading/erasing"){
     CHECK (n.read(0,0,10,Direction::Vertical,13) == "~~~~~~~~~~~~~");
 }
 
+
+Notebook n2;
+
+TEST_CASE("Bad input") {
+    n2.write(0,0,1,Direction::Vertical,"OrelZamler");
+    n2.erase(0,0,5,Direction::Horizontal,6);
+    for (size_t i = 0; i < 255; i++){
+        char c = i;
+        string s = "" + c;
+
+        // Char is printable. Check writing overiding:
+        if (i >= 32 && i <= 126){
+            string over_riding_one_char = s;
+            string over_riding_the_entire_word = "Word";
+            string over_riding_and_more = "Word" + c;
+            string over_riding_erased_data = "Zamler";
+            string over_riding_erased_data_and_more = "OrelZ";
+            string over_riding_erased_and_written_data = "OrelZamler";
+
+            CHECK_THROWS(n2.write(0,0,1,Direction::Horizontal,over_riding_one_char));
+            CHECK_THROWS(n2.write(0,0,1,Direction::Horizontal,over_riding_the_entire_word));
+            CHECK_THROWS(n2.write(0,0,0,Direction::Vertical,over_riding_and_more));
+            CHECK_THROWS(n2.write(0,0,5,Direction::Vertical,over_riding_erased_data));
+            CHECK_THROWS(n2.write(0,0,5,Direction::Vertical,over_riding_erased_data_and_more));
+            CHECK_THROWS(n2.write(0,0,0,Direction::Vertical,over_riding_erased_and_written_data));
+        }
+        // Char is not printabe throw exception!
+        else{
+            CHECK_THROWS(n2.write(0, i%10, i%100, Direction::Horizontal, s));
+            CHECK_THROWS(n2.write(0, i%10, i%100, Direction::Horizontal, "legal string" + s));
+        }
+    } 
+    CHECK_THROWS ();
+}
