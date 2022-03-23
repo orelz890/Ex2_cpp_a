@@ -12,7 +12,7 @@ using namespace std;
 // (page: int, row: int, col: int, direction: Direction).
 
 Notebook n;
-unsigned int page0 = 0;
+int page0 = 0;
 
 TEST_CASE("Good writing/reading/erasing"){
 
@@ -110,5 +110,22 @@ TEST_CASE("Bad input") {
         }
     }
     
-    // Negetive input is not posible becouse its an unsigned int
+    // Negetive input
+    for (int i = -50; i < 0; i++){
+        CHECK_THROWS(n2.write(i,0,0,Direction::Horizontal,"not legal"));
+        CHECK_THROWS(n2.write(0,i,0,Direction::Horizontal,"not legal"));
+        CHECK_THROWS(n2.write(0,0,i,Direction::Horizontal,"not legal"));
+
+        CHECK_THROWS(n2.read(i,0,0,Direction::Horizontal,1));
+        CHECK_THROWS(n2.read(0,i,0,Direction::Horizontal,1));
+        CHECK_THROWS(n2.read(0,0,i,Direction::Horizontal,1));
+        CHECK_THROWS(n2.read(0,0,i,Direction::Horizontal,i));
+
+        CHECK_THROWS(n2.erase(i,0,0,Direction::Horizontal,1));
+        CHECK_THROWS(n2.erase(0,i,0,Direction::Horizontal,1));
+        CHECK_THROWS(n2.erase(0,0,0,Direction::Horizontal,1));
+        CHECK_THROWS(n2.erase(0,0,0,Direction::Horizontal,i));
+
+    }
+    
 }
