@@ -92,7 +92,7 @@ TEST_CASE("Bad input") {
 
             CHECK_THROWS(n2.write(0,0,1,Direction::Horizontal,over_riding_one_char));
             CHECK_THROWS(n2.write(0,0,1,Direction::Horizontal,over_riding_the_entire_word));
-            CHECK_THROWS(n2.write(0,0,0,Direction::Vertical,over_riding_a_word_and_more));
+            CHECK_THROWS(n2.write(0,0,0,Direction::Horizontal,over_riding_a_word_and_more));
             CHECK_THROWS(n2.write(0,0,5,Direction::Vertical,over_riding_erased_data));            
             CHECK_THROWS(n2.write(0,0,5,Direction::Vertical,over_riding_erased_data_and_more));
             CHECK_THROWS(n2.write(0,0,0,Direction::Vertical,over_riding_erased_and_written_data));
