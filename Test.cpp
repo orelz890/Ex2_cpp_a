@@ -34,9 +34,9 @@ TEST_CASE("Good writing/reading/erasing"){
 
     // Checking that the notebook was filled by under score (_) in the empty cels created between the writed data
     CHECK(n.read(page0,0,4,Direction::Horizontal ,5) == "_____");
-    for (size_t row = 0; row < 13; row++){
+    for (size_t row = 1; row < 13; row++){
         for (size_t col = 0; col < 100; col++){
-            if (row != 0 && col == 0){
+            if (col == 0){
                 CHECK(n.read(page0,row,0,Direction::Horizontal ,9) == "_________");
                 col += 10;
             }else if (row < 12){
@@ -123,7 +123,7 @@ TEST_CASE("Bad input") {
 
         CHECK_THROWS(n2.erase(i,0,0,Direction::Horizontal,1));
         CHECK_THROWS(n2.erase(0,i,0,Direction::Horizontal,1));
-        CHECK_THROWS(n2.erase(0,0,0,Direction::Horizontal,1));
+        CHECK_THROWS(n2.erase(0,0,i,Direction::Horizontal,1));
         CHECK_THROWS(n2.erase(0,0,0,Direction::Horizontal,i));
 
     }
