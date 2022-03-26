@@ -86,7 +86,7 @@ TEST_CASE("Bad input") {
             string over_riding_one_char = s;
             string over_riding_the_entire_word = "Word";
             string over_riding_a_word_and_more = "Word" + s;
-            string over_riding_erased_data = "Zamler";
+            string over_riding_erased_data = "Z";
             string over_riding_erased_data_and_more = "OrelZ";
             string over_riding_erased_and_written_data = "OrelZamler";
 
