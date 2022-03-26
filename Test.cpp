@@ -96,11 +96,6 @@ TEST_CASE("Bad input") {
             CHECK_THROWS(n2.write(0,0,5,Direction::Vertical,over_riding_erased_data));            
             CHECK_THROWS(n2.write(0,0,5,Direction::Vertical,over_riding_erased_data_and_more));
             CHECK_THROWS(n2.write(0,0,0,Direction::Vertical,over_riding_erased_and_written_data));
-            // Erasing what have been earsted alredy
-            CHECK_THROWS(n2.erase(0,0,5,Direction::Vertical,2));
-            // Erasing what have been earsted alredy and more legal chars
-            CHECK_THROWS(n2.erase(0,0,3,Direction::Vertical,5));
-
 
         }
         // Char is not printabe!
